@@ -18,8 +18,18 @@ def get_db_connection():
 def index():
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("SELECT id, name, description, price_cents, sku FROM products WHERE featured = TRUE ORDER BY id;")
+    featured = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template('index.html', featured=featured)
+
+@app.route('/products')
+def products():
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT id, name, description, price_cents, sku FROM products ORDER BY id;")
     products = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template('index.html', products=products)
+    return render_template('products.html', products=products)

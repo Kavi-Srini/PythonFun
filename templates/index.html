@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
+{% block title %}Welcome to The Spiced Mocha{% endblock %}
+
 {% block content %}
-    <h1>{% block title %} Welcome to The Spiced Mocha {% endblock %}</h1>
+<h1>Featured Products</h1>
+<div class="row">
+  {% for p in featured %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.name }}</h5>
+        <p class="card-text">{{ p.description }}</p>
+      </div>
+      <div class="card-footer">
+        <strong>${{ '%.2f' % (p.price_cents / 100) }}</strong>
+        <small class="text-muted float-right">{{ p.sku }}</small>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>No featured products at the moment.</p>
+  {% endfor %}
+</div>
 {% endblock %}

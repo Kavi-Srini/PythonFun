@@ -4,4 +4,5 @@ CREATE TABLE if NOT EXISTS products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL
+    featured BOOLEAN DEFAULT FALSE
 );
