@@ -1,10 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
-def greeting():
-    return "Welcome to The Spiced Mocha!"
 
-if __name__ == "__main__":
-    app.run()
+
+def index():
+    return render_template('index.html')
