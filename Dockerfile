@@ -3,6 +3,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
+RUN chmod +x /app/docker-entrypoint.sh
 ENV FLASK_APP=TheSpicedMocha.py
 EXPOSE 5000
-CMD ["flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
