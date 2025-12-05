@@ -3,14 +3,21 @@ import psycopg2
 import psycopg2.extras
 from flask import Flask, render_template
 
+db_url = os.environ.get("DATABASE_URL")
+
 app = Flask(__name__)
 
 def get_db_connection():
+    if db_url:
+        # DATABASE_URL like: postgresql://spiced:secretpassword@host.docker.internal:5432/spiceddb
+        return psycopg2.connect(db_url)
+
+    # Fallback: use individual env vars (e.g. when running locally without Docker)
     return psycopg2.connect(
         host=os.getenv("DB_HOST", "localhost"),
         port=os.getenv("DB_PORT", "5432"),
         dbname=os.getenv("DB_NAME", "commerce"),
-        user=os.getenv("DB_USER", "user"),
+        user=os.getenv("DB_USER", "spicedmocha"),
         password=os.getenv("DB_PASSWORD", "password"),
     )
 
